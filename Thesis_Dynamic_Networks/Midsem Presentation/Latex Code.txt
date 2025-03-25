@@ -1,0 +1,616 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+ \usetheme{CambridgeUS}
+ \usecolortheme{rose}
+
+% \usetheme{PauloAlto}
+% \usecolortheme{rose}
+
+
+
+
+\usepackage{amsmath, amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx} % Allows including images
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{hyperref}
+\usepackage{setspace}
+%\usepackage{algorithm}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{algcompatible}
+%\usepackage{algpseudocode}
+\usepackage{algorithmic}
+%\usepackage{forest}
+\usepackage{comment}
+%\usepackage{natbib}
+%\bibliographystyle{abbrvnat}
+%\setcitestyle{authoryear}
+%\renewcommand{\bibname}{References}
+\usepackage[style=authoryear, backend=biber]{biblatex}
+\addbibresource{library.bib}
+\usepackage{tikz}
+\usetikzlibrary{trees,positioning,shapes,shadows,arrows.meta}
+
+\hypersetup{
+    colorlinks=false,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
+\urlstyle{same}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Study of Dynamic Networks]{Study of Dynamic Networks} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Rohan Shinde} % Your name
+\institute[ISI Kolkata] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+M. Stat $2^{\text{nd}}$ Year Project \\ % Your institution for the title page
+\medskip
+\textit{Supervised by Dr. Arindam Chatterjee, SMU, ISI Delhi.} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Introduction} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+\subsection{Networks}
+
+%------------------------------------------------------
+
+
+
+\begin{frame}
+\frametitle{Networks: The Fabric of Our Interconnected World}
+
+\small
+\begin{itemize}
+    \setlength\itemsep{0.5em}
+    \item Mathematical representation of pairwise relationships or interactions among a set of objects
+    \item Objects as vertices (nodes) and edges (links) connect vertices that share specific relationships
+    \item Why study networks?
+    \pause
+    \begin{itemize}
+        \item Communication and Collaboration %: Sharing information, resources, and ideas seamlessly.
+        \pause
+        \item Resource Sharing %: Optimizing resource allocation and access across systems.
+        \pause
+        \item Modelling and Simulation %: Understanding complex systems through network representations.
+        \pause
+        \item Prediction and Analysis %: Foreseeing trends and behaviours by analyzing network dynamics.
+    \end{itemize}
+
+
+\end{itemize}
+\end{frame}
+    
+
+
+\begin{frame}
+\frametitle{Examples of networks}
+\begin{figure}[htp]
+        \begin{subfigure}{0.465\textwidth}
+            \centering
+            \includegraphics[height = 2.5cm, width = 0.9\textwidth]{Social Networks.png}
+            \caption{Social Networks}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.465\textwidth}
+            \centering
+            \includegraphics[height = 2.5cm, width = 0.9\textwidth]{Protein Interaction.png}
+            \caption{Biological Networks (here Protein Interaction Network)}
+        \end{subfigure}
+        \begin{subfigure}{0.465\textwidth}
+            \centering
+            \includegraphics[height = 2.5cm, width =0.9\textwidth]{Internet Connectivity network.jpg}
+            \caption{Technical Connectivity Networks (here Internet)}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.465\textwidth}
+            \centering
+            \includegraphics[height = 2.5cm, width = 0.9\textwidth]{Flight Route network.png}
+            \caption{Transportation Networks (here Flight Routes)}
+        \end{subfigure}
+        \label{fig:Examples}
+    \end{figure}
+   
+\end{frame}
+
+
+
+
+
+\subsection{Dynamic networks} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+
+\begin{frame}
+\frametitle{Static vs Dynamic Networks}
+
+\begin{itemize}
+    \item \underline{Static approach}: A single snapshot of a network is the object of interest
+    \item \underline{Dynamic approach}: The changes in a network over time are taken into consideration
+    \item The term 'dynamic' is commonly employed in the context of networks to describe systems where edges among vertices, and sometimes the vertices themselves, change over time.
+\end{itemize}
+    \begin{block}{Dynamic Networks}
+        A dynamic network can be conceptualized as a time-indexed graph $G(t) =(V(t), E(t))$, where time $t$ varies discretely or continuously, and $V(t)$ represents the set of vertices at time $t$, while $E(t)$ denotes the presence or absence of edges between vertices (\cite{Kolaczyk2009_book}) 
+    \end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example of dynamic Networks}
+    \begin{figure}[ht]
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[height = 4.2cm, width = \textwidth]{Sparrow_2009.PNG}
+            \label{fig:sparrow2009}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[height = 4.2cm, width = \textwidth]{sparrow_2010.PNG}
+            \label{fig:sparrow2010}
+        \end{subfigure}
+        \caption{The golden-crowned sparrow interaction networks collected for the years 2009 and 2010 (data from \cite{data}). The colour of the edge denotes normalized edge weights ($\text{interactions}/\text{max(interactions)}$)}
+        \label{fig:Sparrow}
+    \end{figure}
+
+\end{frame}
+
+\section{Dynamic Network Models}
+
+\begin{frame}
+\frametitle{Dynamic Network Models}
+\small
+
+\begin{itemize}
+    \item Important for prediction, causal inference and capturing trends
+    \item Choice of modelling approach largely depends on the research question at hand
+
+\end{itemize}
+\pause
+    \scalebox{0.75}{\begin{tikzpicture}[
+        every node/.style = {
+            draw,
+            rounded corners,
+            fill=red!15,
+            text width=21mm,
+            minimum height=15mm,
+            align=center,
+            drop shadow},
+        >=Stealth,
+        level distance = 30mm,
+        network/.style = {fill=red!30, circle},
+        sibling distance=25mm]
+    
+        \begin{scope}[grow'=right,edge from parent fork right,->]
+            \node (root) at (0,0) {}
+                child  {node (b3) {Network-based approach}
+                child {node (c1) {Dynamic Random Graphs}}
+                child {node (c2) {Dynamic SBM}
+                    child {node (d1) {Probabilistic evolution of parameters}}
+                    child {node (d2) {Functional evolution of parameters}}}};
+         \end{scope}
+         
+         \begin{scope}[grow=left,edge from parent fork left,->]
+            \node[network] (root) at (0,0) {\textbf{Dynamic network models}}
+                child  {node (a1) {Time-series approach }};
+             \end{scope}
+        \pause
+        \begin{scope}[grow=down,edge from parent fork down,->]
+            \node[network] (root) at (0,0) {\textbf{Dynamic network models}}
+                child[dashed]  {node (d1) {MRF based approach}};
+             \end{scope}
+    \end{tikzpicture}}
+\end{frame}
+
+
+
+\subsection{Dynamic Erdos Renyi}
+
+\begin{frame}
+\frametitle{Basic model- Dynamic Erdos-Renyi}
+    \begin{itemize}
+        \item Static Erdos-Renyi: Connecting $N$ labelled nodes randomly with each edge being included in the graph with constant probability $p\in (0,1)$ independently from every other edge
+        \item Easier to study due to simple architecture
+        \item We discuss two dynamic extensions from \cite{Zhang_dy_er_2016} and \cite{Mandjes_Dynamic_ER_2019}
+        \pause
+        \item \textcolor{red}{\cite{Zhang_dy_er_2016}}:
+        \begin{itemize}
+            \item Each of the edges undergoes independent evolution. The model particularly focuses on the estimation of the rate at which edges appear and disappear in the network
+            \item An edge exists for an exponential time with a parameter $\mu$ (referred to as the 'up-rate') and disappears for an exponential time with a parameter $\lambda$ (referred to as the 'down-rate')
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dynamic Erdos-Renyi model (Contd.)}
+%\small
+\begin{itemize}
+\item \textcolor{red}{\cite{Mandjes_Dynamic_ER_2019}}
+    \begin{itemize}
+        \item Two variations of dynamic Erdos-Renyi in which the edges evolve dependently unlike that in \cite{Zhang_dy_er_2016}
+        \item Number of nodes remains fixed over time and the evolution in time is characterized in terms of the changes in edge-structure
+        \item The up-rate and down-rate of each edge are determined by an external, autonomously evolving continuous-time Markov process, denoted as $(X(t))_{t\geq 0}$
+        \item Authors prove a functional central limit theorem for the number of edges in the network at time $t$ (denoted as $Y(t)$) for both of the variations
+    \end{itemize}
+\end{itemize}
+    
+\end{frame}
+
+\subsection{Dynamic Stochastic Block Models}
+
+\begin{frame}
+\frametitle{Dynamic Stochastic Block Models}
+    \begin{itemize}
+        \item \underline{Static SBM} probability of the existence of an edge between any two nodes of the network (with a fixed set of nodes) depends only on the communities in which these nodes belong
+        \item \underline{Use:} Community detection and clustering
+        \item We discuss the dynamic extensions as two sub-cases:
+        \pause
+        \begin{itemize}
+            \item The connection probabilities between communities have a \textcolor{red}{Markovian evolution}. The community of each vertex \underline{may} evolve in a Markovian manner dependently or independently of other vertices
+            \pause
+            \item The connection probabilities between communities evolve as a smooth function of time (\textcolor{red}{functional evolution})
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{DSBM for Weighted Interactions (dynSBM)- \cite{Matias2017}}
+\small
+    \begin{itemize}
+    \item \underline{Discrete-time Markovian structure}
+    \item Data: $Y = (Y^t)_{1\leq t \leq T}$ - weighted interactions among $N$ individuals over $T$ time points.
+    \pause
+    \item $\mathbf{Z} = (Z^t_i)_{1\leq t \leq T, 1\leq i \leq N}$ - community assignment for each individual at each time point.
+      \begin{itemize}
+        \item $Z_i= (Z_i^t)_{1\leq t\leq T}$ - i.i.d. random variable, follows an irreducible, aperiodic stationary Markov chain.
+      \end{itemize}
+      \pause
+    \item Given $\mathbf{Z}$, $\mathbf{Y}$ are independent. For each fixed $t$, $Y^t$ follows SBM, where \((Y^t_{ij})_{1\leq i < j \leq N}\) are independent given \(Z^t\)
+    \pause
+    \item Model Distribution:
+    $$Y^t_{ij} | \{Z^t_{iq}Z^t_{jl} = 1\} \sim (1 -\beta^t_{ql})\delta_0(\cdot) + \beta^t_{ql} F(\cdot, \gamma^t_{ql})$$
+    \begin{itemize}
+        \item $\beta^t_{ql}$ - probability of interaction between communities $q$ and $l$ at time $t$.
+        \item $F(\cdot, \gamma)$ - parametric family of interaction distributions.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Autoregressive SBM - \cite{Ludkin2018}}
+\small
+    \begin{itemize}
+    \item \underline{Continuous-time Markovian structure with Bayesian framework}
+    \item Fixed set of $N$ vertices partitioned into $Q$ communities; transitions between communities follow CTMC with $\text{Exp}(\lambda)$ holding times.
+    
+    %\item $V = \{1, 2, \ldots, N\}$ partitioned into $Q$ communities.
+    %\item $C_i(t) \in \{1, 2, \ldots, Q\}$ - community for node $i$ at time $t$. Transitions follow CTMC with exponential holding times.
+    
+    \item $E_{ij}(t) \in \{0, 1\}$ - edge $(i, j)$ exists at time $t$.
+      \begin{itemize}
+        \item Follows piecewise time-homogeneous CTMC with: % $\begin{pmatrix}
+        %  -\alpha_k & \alpha_k \\
+        %  \delta_k & -\delta_k 
+        %\end{pmatrix}$
+        $\alpha_k$ - appearance rate within community $k$, $\delta_k$ - deletion rate within community $k$
+        \item $\pi_k = \alpha_k/(\alpha_k + \delta_k)$, and $\pmb{\pi} = (\pi_0, \pi_1, \ldots, \pi_K)$ 
+        \item $\rho_k = \alpha_k + \delta_k$, and $\pmb{\rho} = (\rho_0, \rho_1, \ldots, \rho_K)$
+      \end{itemize}
+    \item Network snapshots at times $\textbf{t} = (t_0, t_1, \ldots, t_T)$: $e^s_{ij}$ - edge state at time $t_s$; $c^s_i$ - community of node $i$ at time $t_s$ (latent variable)
+    \item \underline{Posterior Distribution:} $\pi(\pmb{\theta}, \mathbf{c}(\mathbf{t}) | \mathbf{e}(\mathbf{t}))$
+      \begin{itemize}
+        \item $\pmb{\theta} = (\lambda, \pmb{\pi}, \pmb{\rho})$- model parameters, $\mathbf{c}(\mathbf{t})$- community memberships over time
+      \end{itemize}
+    \item RJMCMC with data augmentation is employed for estimation of parameters
+
+  \end{itemize}
+\end{frame}
+
+
+\begin{comment}
+  \begin{itemize}
+    \item Samples from $\pi(\pmb{\theta}, \mathbf{c}(\mathbf{t}) | \mathbf{e}(\mathbf{t}))$ considering latent changepoints:
+      \begin{itemize}
+        \item $\pmb{\tau}_i$ - changepoints for node $i$.
+        \item $\mathbf{c}_i(\pmb{\tau}_i)$ - community memberships at changepoints for node $i$.
+      \end{itemize}
+\end{itemize}
+\end{comment}
+
+
+
+
+\begin{frame}
+\frametitle{Functional evolution of SBM- \cite{Pensky2019}}
+    \begin{itemize}
+        \item \textcolor{red}{\cite{Pensky2019}}: First non-parametric regression based Dynamic SBM 
+        \begin{itemize}
+            \item Allows group membership switching and enables one to exploit stability in the group memberships over time
+        \end{itemize}
+        \pause
+        \item Penalized least squares approach:
+        \pause
+    \begin{itemize}
+        \item Decompose the connection probability tensor $\pmb{\Lambda}$ using the clustering matrix $\tilde{\mathbf{Z}}^{(l)}$ and a low-complexity tensor $\mathbf{G}_{*,*,l}$ capturing the probabilities of edges forming between any pair of communities
+        \pause
+        \item Vectorization and further eliminating redundant entries of $\mathbf{G}_{*,*,l}$ and $\pmb{\Lambda}$
+        \pause
+        \item \underline{Assumption}: smooth changes in connection probabilities over time. These changes are modelled using orthogonal basis functions, such as Fourier or wavelet transforms
+    \end{itemize}
+    \pause
+    \item Minimax bounds on the estimator of $\pmb{\Lambda}$ are also discussed
+    \end{itemize}
+\end{frame}
+
+\subsection{Models as time series of networks}
+
+\begin{frame}
+\frametitle{Models as time series of networks}
+\textcolor{red}{GNAR-edge model (\cite{Mantziou2023})}:
+\begin{itemize}
+    \item Addresses directed networks on $N$ nodes with possible self-loops
+    \item GNAR-edge($L$, $[R_1, \ldots, R_L]$) model: $$X_{ij}^t = \sum_{l=1}^L \left(\textcolor{blue}{\alpha_{ij,l}}X_{ij}^{t-1}+ \sum_{r=1}^{R_l}\textcolor{blue}{\beta_{l,r}} \sum_{m,n : \{m,n\}\in \textcolor{purple}{\mathcal{N}^r(\{i,j\})}} w_{ij,mn}X_{mn}^{t-1}\right) + u_{ij}^t$$
+    \begin{itemize}
+        \item $X_{ij}^t$: weight of edge $\{i,j\}$ at time $t$
+        %\item $\mathcal{N}^r(\{i, j\})$- set of $r$-stage neighbouring edges of the edge $\{i, j\}$
+        \item $L$: maximum lag and $R_l$: the maximum stage neighbours for lag $l$
+        %\item $\alpha_{ij,l}$- autoregressive parameters at lag $l$ for edge $\{i, j\}$
+        %\item $\beta_{l,r}$- parameters for the effect of $r$-stage neighboring edges at lag $l$
+        \item $W_{ij,mn} = |\mathcal{N}^r(\{i,j\})|^{-1}$: normalizing weight for $X_{mn}^{t-1}$ which equally weights all neighboring edges of edge $\{i, j\}$ at lag $l$
+        \item $u_{ij,t}$: white noise with mean 0 and variance $\sigma^2$
+    \end{itemize}
+    \item Parameters estimated using least squares
+\end{itemize}
+    
+\end{frame}
+
+\subsection{Markov Random Field Approach}
+
+\begin{frame}
+\frametitle{Markov Random Field Approach - \cite{Kolar2010}}
+    \begin{itemize}
+    \item \textbf{Challenge:} Estimate network structure from time series of entity attributes (e.g., stock prices, gene expressions).
+    \item \textbf{Method:} Dynamic Ising Model (MRF)
+      \begin{itemize}
+        \item Captures conditional dependencies between attributes.
+        \item Parameters estimated by maximizing pseudo-likelihood.
+        \item \textbf{Identifiability constraints:}
+        \pause
+          \begin{itemize}
+            \item Smooth changes in parameters
+            \item Piecewise constant with abrupt structural changes
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \vspace{0.5cm}
+  \textbf{Benefits:}
+  \begin{itemize}
+    \item Infers network structure without explicit network snapshots.
+    \item Handles dynamic changes in network structure over time.
+  \end{itemize}
+\end{frame}
+
+
+
+
+\begin{comment}
+    \begin{frame}
+\frametitle{Markov Random Field Approach - \cite{Kolar2010}}
+    \begin{itemize}
+    \item What if we don't have network snapshots but only time series of entity attributes 
+    \begin{itemize}
+        \item Stock price going either up or down
+        \item Gene being up-regulated or down-regulated
+    \end{itemize}
+       % \item \underline{Goal:} Estimate dynamic network structure from a time series of entity attributes in the absence of serial snapshots of underlying networks
+        \item Ising model, a special kind of MRF, is employed
+        \item The conditional independences between the random attributes are used as the potentials (the parameters of the model) for the dynamic version of the Ising model
+        \item Potentials are estimated by maximising the pseudo-likelihood under the MRF
+        \item To make parameters identifiable, parameters are constrained in the following ways:
+        \begin{itemize}
+            \item \textit{Smooth changes in parameters} \item \textit{piecewise constant with abrupt structural changes in parameters}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+\end{comment}
+
+\begin{comment}
+     \item **Analysis:**
+      \begin{itemize}
+        \item Transitivity calculated for each time step (ratio of triangles to triads)
+        \item **See Figure \ref{fig:simul}**: Transitivity plots for each transition matrix.
+      \end{itemize}
+    \item **Observations:**
+      \begin{itemize}
+        \item Consistent patterns within each set of simulations.
+        \item Variations in transitivity evolution based on the transition matrix.
+      \end{itemize}
+    \item **Conclusion:**
+      \begin{itemize}
+        \item Simulations demonstrate the impact of model parameters on transitivity.
+        \item Future work: Explore broader modeling approaches and diverse summary statistics.
+      \end{itemize}
+\end{comment}
+\section{Simulations}
+
+\begin{frame}
+\frametitle{Simulations}
+\small
+\begin{itemize}
+\item Visualizing large networks alone hinders comprehension.
+\pause
+    \begin{itemize}
+        \item  \underline{Network summary statistics} offer a potential solution.
+    \end{itemize}
+    \item %In dynamic networks, 
+    Understanding the evolution of these statistics is crucial to:
+      \begin{itemize}
+        \item Unveil underlying network dynamics.
+        \item Analyze the connection to the network's modelling structure.
+      \end{itemize}
+\pause
+    \item Simulate dynamic networks from the dynSBM model such that  $Y_{ij}^t|Z_{iq}^tZ_{jl}^t=1 \sim \text{Ber}(\beta_{ql}^t)$
+    %\item Here we simulate $Y_{ij}^t|Z_{iq}^tZ_{jl}^t=1 \sim \text{Ber}(\beta_{ql}^t)$
+    \begin{itemize}
+        \item $T = 5$ time steps, $N = 30$ nodes, $Q = 3$ communities
+        \item Initial states are chosen at random and $\beta_{ql}^t= \beta_{lq}^t\overset{\text{i.i.d}}{\sim} \text{Unif}(0,1)$
+        
+    \end{itemize}
+        \item Transitivity (fraction of closed triads) was calculated at each time step for dynamic networks with each of the below transition matrices
+\item 4 different transition matrices were employed to study evolution of transitivity
+        \resizebox{\linewidth}{!}{%
+    $$M_1 = \begin{pmatrix}
+0.8 & 0.05 & 0.15\\
+0.1 & 0.6 & 0.3\\
+0.2 & 0.05 & 0.75
+\end{pmatrix},
+M_2 = \begin{pmatrix}
+0.65 & 0.3 & 0.05\\
+0.1 & 0.6 & 0.3\\
+0.2 & 0.05 & 0.75
+\end{pmatrix},
+M_3= \begin{pmatrix}
+0.65 & 0.3 & 0.05\\
+0.2 & 0.75 & 0.05\\
+0.2 & 0.05 & 0.75
+\end{pmatrix},
+M_4= \begin{pmatrix}
+0.8 & 0.05 & 0.15\\
+0.1 & 0.6 & 0.3\\
+0.25 & 0.2 & 0.55
+\end{pmatrix}
+$$%
+}
+        
+
+    
+  % \item Simulations demonstrate the impact of model parameters on transitivity
+  \end{itemize}
+
+\end{frame}
+
+
+
+\begin{comment}
+    \begin{itemize}
+       \item Understanding large networks becomes a challenging task by just visualising them
+       \item Network summary statistics turn out to be a possible solution
+       \item In dynamic networks, it becomes crucial to understand the evolution of these summary statistics to understand the underlying network in the context of the problem at hand
+       \item The evolution of these summary statistics would also heavily depend on the underlying modelling structure of the dynamic network
+       \item Our further goal of the project will be to study this dynamic evolution of several summary statistics 
+   \end{itemize}
+\end{comment}
+
+
+\section{Further exploration}
+\begin{frame}
+\frametitle{Simulations (Contd.)}
+\small
+\begin{itemize}
+    \item This process was repeated $50$ times
+\end{itemize}
+\pause
+  \begin{figure}[ht]
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[height = 2cm, width = 0.8\textwidth]{Mat1.PNG}
+            \caption{50 simulations corresponding to $M_1$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[height = 2cm, width = 0.8\textwidth]{Mat2.PNG}
+            \caption{50 simulations corresponding to $M_2$}
+        \end{subfigure}
+    
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[height = 2cm, width =0.8\textwidth]{Mat3.PNG}
+            \caption{50 simulations corresponding to $M_3$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[height = 2cm, width = 0.8\textwidth]{Mat4.PNG}
+            \caption{50 simulations corresponding to $M_4$}
+        \end{subfigure}
+    \end{figure}
+  \begin{itemize}
+      \item Simulations demonstrate the impact of model parameters on transitivity
+  \end{itemize}
+%\pause
+%\begin{block}{Further exploration}
+%    We hope to explore the evolution of diverse summary statistics in dynamic networks for broader modelling approaches further on in the project
+%\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusion and Future Plans}
+    \begin{itemize}
+        \item The area of dynamic network models is less explored, and there are a wide variety of modelling approaches.
+        \item The 'first half' of the project has explored these modelling approaches, and the types of results that are developed in each of them.
+        \item We plan to investigate specific dynamic network models in more detail and study properties of subgraph counts, and/or other network summary statistics, as time evolves.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\Huge{\centerline{Thank You}}
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]
+\frametitle{References}
+\printbibliography
+%    \bibliography{library}
+\end{frame}
+
