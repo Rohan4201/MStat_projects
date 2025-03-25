@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LMP Rank Tests for Scale Shift</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rohan Shinde, Saransh Gupta, Yash Gupta" />
+    <script src="Presentation_Main_files/header-attrs-2.10/header-attrs.js"></script>
+    <link href="Presentation_Main_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="Presentation_Main_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LMP Rank Tests for Scale Shift
+]
+.subtitle[
+## Non-Parametric Inference
+]
+.author[
+### Rohan Shinde, Saransh Gupta, Yash Gupta
+]
+
+---
+
+
+
+
+# Motivation
+
+--
+
+We are a F1 race car company using bolts of a specific size to join car parts. We have a new machine to produce bolts
+
+--
+
+Test whether variability of thickness is same or not as original machine
+
+--
+
+Let's consider our options:
+`$$\text{1. Let the bolts be vary in thickness. Why should we even care?}$$`
+
+--
+
+`$$\text{2. Apply Parametric Procedures, but what if assumptions are wrong?}$$`
+
+--
+
+`$$\text{3. Take Non-Paramteric Inference course}$$`
+--
+
+`$$\text{And, use LMP rank tests for scale}$$`
+
+
+&lt;img src="Image-Meme/f1 flag.gif" width="20%" height="20%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+
+
+---
+
+# Why not use F test?
+
+Given, the samples of bolts' thickness
+
+`$$\text{Original Machine: } X_1 , X_2, ..., X_n$$`
+`$$\text{New Machine: } Y_1 , Y_2, ..., Y_m$$`
+
+
+`$$\text{Assume: } \  X_i \sim N(0,1) ; \ Y_j \sim N(0,\sigma^2); \ \   \text{where } \  \sigma^2 &gt; 1$$`
+
+`$$\text{Test: } \  H_0: \sigma = 1 \ \  \text{vs} \ \ H_1: \sigma &gt; 1$$`
+
+Reject `\(H_0\)` for the large values of the statistic at level `\(\alpha\)`:
+
+`$$\frac{\sum_{i=1}^n (X_i - \bar{X})^2 / (n-1)}{\sum_{j=1}^m (Y_j - \bar{Y})^2 / (m-1)} \sim F_{n-1, m-1}$$`
+
+---
+
+# Why not use F test? (contd.)
+
+`$$\text{Given, } X_i \sim N(0,1) ; \ Y_j \sim N(0,\sigma^2); \  \text{where} \ \sigma^2 &gt; 1$$`
+
+`$$\text{Test: } H_0: \sigma = 1 \ \  \text{vs} \ \ H_1: \sigma &gt; 1$$`
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="Image/plot_parametric.jpg" alt="F-Test Power curve" width="70%" height="70%" /&gt;
+&lt;p class="caption"&gt;F-Test Power curve&lt;/p&gt;
+&lt;/div&gt;
+
+
+---
+
+
+# LMP Rank Tests (Theory)
+
+One option is to use LMP Rank Tests for Scale shift.
+
+Assume independent samples with location parameter `\(0\)`:
+
+\\\[X_1, X_2, ..., X_n 	\overset{iid}\sim H(x/ \theta)\\\]
+\\\[Y_1, Y_2, ..., Y_m 	\overset{iid}\sim H(x)\\\]
+
+Consider the statistic :
+\\\[T = \sum_{i=1}^N c_i.a_N(R_i, f) \ \ ; \ \ \text{N= n+m}\\\]
+
+Under certain conditions, the rank test with critical region
+\\\[T \geq k_{\alpha}\\\] 
+is LMP Rank Test at level `\(\alpha\)` for
+
+\\\[H_0: \theta = 1 \ \ vs \ \ H_1: \theta &gt; 1\\\]
+
+---
+
+## More about Rank Statistic
+
+`$$T = \sum_{i=1}^n c_i.a_N(R_i, f)$$`
+
+Constants: `\(\begin{equation} c_i = \begin{cases} -1 &amp; \text{, } i^{th} \text{ observation corresponds to X} \\ 0         &amp; \text{, otherwise} \end{cases} \end{equation}\)`
+
+Score functions: `$$a_N(i,f) = \mathbb{E} \left[\frac{f'( X_{(i)}, 0)}{f( X_{(i)}, 0)} \right]$$`
+
+Using the relation, we find out scores corresponding LMP Rank Tests For different underlying distribution
+
+`$$f(x; \theta) = e^{\theta} h(e^{\theta} . x)$$`
+
+---
+
+# Score functions
+
+|Distribution| Score function for X(i) |
+|---|---|
+|Normal(0,1)| `\(\ \ \mathbb{E}[Z_{(i, N)}^2]\)` |
+|Exponential(1) | `\(\ \ \mathbb{E}[X_{(i, N)}] = \sum_{j=R_i}^N \frac{1}{N+1-j}\)` |
+|Gamma(k,1) | `\(\ \ \mathbb{E}[X_{(i, N)}]\)` |
+|Weibull(k,1) | `\(\ \ \mathbb{E}[X_{(i, N)}^k]\)` |
+|Cauchy(0,1) | `\(\ \ - \mathbb{E}[ 1/ (1+ X_{(i, N)}^2)]\)` |
+|Laplace(0,1) | `\(\ \ \mathbb{E}[ \mid X_{(i, N)} \mid]\)` |
+
+---
+
+# Generating Score Functions
+
+At first, calculating score function for Normal distribution simulation was tried 5000 replications
+
+Idea: Using Law of Large Numbers, try to get a close value for the score function
+
+--
+
+- Generate a sample from N=200. Sort the values
+- Repeat for 5000 times
+- Report score function using `\(\widehat{\mathbb{E}}[g(X_{(i)})] = \frac{1}{5000} \sum_{r=1}^{5000} g(\widehat{X_{(i,r)}})\)`
+
+
+--
+
+\\\[ \text{IT WAS NOT A GOOD IDEA}\\\]
+
+\\\[ \text{Problems}\\\]
+
+\\\[ \text{1. Computation took too long}\\\]
+\\\[ \text{2. Obtained values were not precise}\\\]
+
+---
+
+## Generating Score Functions Faster
+
+Idea: How about using the order statistics formula
+
+`\(\mathbb{E}[g(X_{(i)})] =  \int_{- \infty}^{\infty} g(x) {N \choose i} \ i \ F(x)^{i-1} f(x) (1 - F(x))^{N-i} \ dx\)`
+
+Implementation: Use integral function from 'pracma' library
+
+Example: `\(\mathbb{E}[Z_{(3,6)}^2]\)`
+
+
+```r
+f &lt;- function(x, i, N) {
+  pdf &lt;-  choose(N, i) * i * (pnorm(x,0,1) ^ (i-1)) * dnorm(x,0,1) * ((1- pnorm(x,0,1)) ^ (N-i))
+  return( pdf * x^2)
+}
+
+{{ pracma::integral(fun = f, xmin = -Inf, xmax = Inf, 
+                 i = 3, N = 6) }}
+```
+
+```
+## For infinite domains Gauss integration is applied!
+```
+
+```
+## [1] 0.2868337
+```
+
+---
+## Generating Score Functions blazingly fast
+
+Idea: Use parallel programming to calculate results faster
+
+Implementation: Use multiple cores of our machine
+
+&lt;img src="score_function_computation_time.jpg" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Linear Rank Statistics for Scale
+
+Capon Test Statistic : `\(C = \sum_{i=1}^n \mathbb{E}[Z_{R_i,N}^2]\)`
+
+Klotz Test Statistic: `\(K = \sum_{i=1}^n (\Phi^{-1}(\frac{R_i}{N+1}))^2\)`
+ 
+Mood Test Statistic:  `\(M = \sum_{i=1}^n (R_i - \frac{N+1}{2})^2\)`
+
+Savage Test Statistic: `\(S = \sum_{i=1}^n \sum_{j=1}^{R_i} \frac{1}{N+i-j}\)`
+
+- Capon Test Statistic uses score from Normal Distribution
+- Savage Test Statistic uses score Exponential Distribution
+
+---
+
+# Distribution under Null Hypothesis
+
+Under `\(H_0\)`, these statistics are distribution free
+
+&lt;img src="Image/capon_alternate_theta_1.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+# Distribution under Null Hypothesis
+
+
+
+&lt;img src="Image/klotz_alternate_theta_1.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Distribution under Null Hypothesis
+
+
+
+&lt;img src="Image/mood_alternate_theta_1.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Distribution under Null Hypothesis
+
+
+
+&lt;img src="Image/savage_alternate_theta_1.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Distribution under Alternative Hypothesis
+
+Under `\(H_1\)`, these statistics would not remain distribution free. `\(\theta = 3\)`
+
+&lt;img src="Image/capon_alternate_theta_3.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+## Distribution under Alternative Hypothesis
+
+`$$\theta = 3$$`
+
+&lt;img src="Image/klotz_alternate_theta_3.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Distribution under Alternative Hypothesis
+
+`$$\theta = 3$$`
+
+&lt;img src="Image/mood_alternate_theta_3.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Distribution under Alternative Hypothesis
+
+`$$\theta = 3$$`
+
+&lt;img src="Image/savage_alternate_theta_3.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Size of the Test 
+
+&lt;font size="4.5"&gt;Level of significance = 0.05&lt;/font&gt;
+
+
+&lt;img src="Image-Yash/Size of the test.jpg" width="808" style="display: block; margin: auto;" /&gt;
+
+- &lt;font size="4.5"&gt; For `\(N &lt; 20\)` : Size of test differs a lot from the level of significance for Mood and Klotz 
+- For `\(N \geq 20\)` : Size of the test is almost same as level of significance for all tests. &lt;/font&gt;
+
+
+---
+## Capon's statistic under Normal Distribution 
+&lt;img src="Image-Yash/Capon_LMPR.jpg" width="1280" style="display: block; margin: auto;" /&gt;
+
+- &lt;font size="4.5"&gt; We waited for a week for this plot to show up. &lt;/font&gt;
+
+---
+
+## Savage's statistic under Exponential Distribution 
+&lt;img src="Image-Yash/Savage_LMPR1.png" width="1280" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Consistency of Capon Test under Normal Population
+&lt;img src="Image-Yash/Consistency Capon under norrmal.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Consistency of Non Parametric Tests under Normal Population
+&lt;img src="Image-Yash/Consistency_normal.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Not only Capon but Klotz and Mood are also consistent. But rate of convergence to 1 for Savage is very low. &lt;/font&gt;
+
+---
+
+## Consistency of Non Parametric Tests under Logistic Population
+&lt;img src="Image-Yash/Consistency Logistic.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Power decays a little bit but still Capon, Klotz and Mood are working fine. &lt;/font&gt;
+
+---
+
+## Consistency of Non Parametric Tests under Laplace Population
+&lt;img src="Image-Yash/Consistency Laplace.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Power again decays a little bit but still Capon, Klotz and Mood are working fine. &lt;/font&gt;
+
+---
+## Consistency of Non Parametric Tests under Cauchy Population
+&lt;img src="Image-Yash/Consistency Cauchy1.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Consistency of Non Parametric Tests under Exponential Population
+&lt;img src="Image-Yash/Consistency Exponential1.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Under Exponential distribution Savage has very high convergence rate whereas other statistics have very low rate of convergence.  &lt;/font&gt;
+
+---
+
+## Comparison of Capon test under Different Population
+
+&lt;img src="Image-Yash/Capon under all dist.jpg" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; This is similar to what we had seen in test for location difference. &lt;/font&gt;
+- &lt;font size="4"&gt; Ex. Kurtosis  : Normal &lt; Logistic &lt; Laplace &lt; Cauchy &lt;/font&gt;
+- &lt;font size="4"&gt; Power  :  Normal &gt; Logistic &gt; Laplace &gt; Cauchy &lt;/font&gt;
+
+---
+
+## Comparison of Savage tests under Different Population 
+
+&lt;img src="Image-Yash/savage under all dist.jpg" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+- Savage is also showing the same behavior except for parent population (Exponential)
+
+---
+## Parametric Counterpart of Capon and Savage test
+- Setup: For independent samples with location parameter 0
+ `$$X_1, X_2, ..., X_n 	\overset{iid}\sim H(x/ \theta)$$`
+ `$$Y_1, Y_2, ..., Y_m 	\overset{iid}\sim H(x)$$`
+- Recall our Hypothesis : `\(H_0: \theta = 1 \ \ vs \ \ H_1: \theta &gt; 1\)` 
+
+- Here `\(\theta\)` is ratio of scale parameters of X population to Y population.        
+
+- We know that Capon test is LMPR test under Normal distribution.                               
+
+- For Normal Population, `\(X_i \overset{iid}\sim N(0, \sigma_x^2); \ Y_j \overset{iid}\sim N(0, \sigma_y^2)\)`
+
+Hypothesis:
+ `$$H_0: \sigma_x = \sigma_y \ \ vs \ \ H_1: \sigma_x &gt; \sigma_y$$` 
+  
+---
+
+### Parametric Counterpart of Capon and Savage test                                                                                                                                                                                                                                                                                                                                                                                          
+- First Parametric counterpart for this hypothesis that would come in mind is F test:  
+ `$$F = \frac{{\sum_{i=1}^n X_i^2}/n}{{\sum_{j=1}^m Y_j^2}/m}$$`                        
+- Under `\(H_0\)`, F follows `\(F_{(n,m)}\)` - distribution                                                 
+- Similarly, parametric counterpart for Savage statistics( parent population : Exponential) is  
+`$$E = \frac{{\sum_{i=1}^n X_i}/n}{{\sum_{j=1}^m Y_j}/m}$$`
+- Under `\(H_0\)`, `\(\text{E}\)` follows `\(F_{(2n,2m)}\)` - distribution
+
+---
+## Domination of F  under Normal Population
+&lt;img src="Image-Yash/normal_counterpart.jpg" width="150%" height="150%" style="display: block; margin: auto;" /&gt;
+
+---
+## Capon Vs F-test
+&lt;img src="Image-Yash/Capon vs F all dist.jpg" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Capon outperformed F-test under Cauchy Population. &lt;/font&gt;
+- &lt;font size="4"&gt; Other than Normal Population, Capon is performing better than F-test.&lt;/font&gt;
+---
+
+## Capon Vs F-test: Exponential Population
+
+&lt;img src="Image-Yash/15 Capon vs F Exponential n=30, m=40.jpg" width="60%" height="50%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Under Exponential distribution F test is performing way better than Capon test. &lt;/font&gt;
+
+---
+
+
+## Power curve for Parametric Counterpart of Savage
+&lt;img src="Image-Yash/Savage parametric.jpg" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+- &lt;font size="4"&gt; Parametric counterpart will perform better, but power curve of savage is getting closer and closer to power curve corresponding to E-test as sample size increases &lt;/font&gt;
+
+---
+## Savage  Vs E-test
+
+&lt;img src="Image-Yash/Savage vs Exp all dist.jpg" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+--
+
+\\\[ \text{Savage being savage to E-test}\\\]
+
+---
+
+# Asymptotics
+
+Define, `\(\widetilde{T_N} = \sum_{i=1}^n c_i a_N(R_i)\)` where `\(\begin{equation} c_i = \begin{cases} \frac{1}{n} &amp; \text{, } i^{th} \text{ observation corresponds to X} \\ 0         &amp; \text{, otherwise} \end{cases} \end{equation}\)`
+
+By Chernoff-Savage Theorem, `\(\frac{\widetilde{T_N} - \mu_N}{\sigma_N} \sim N(0,1)\)`
+
+Under `\(H_0\)`, 
+\\\[\mu_N = \int_0^1 J(u) du\\\]
+\\\[\ N \sigma^2 = \frac{1 - \lambda_N}{\lambda_N} \left[ \int_0^1 J^2(u) du - (\int_0^1J(u)du)^2 \right]\\\]
+
+where `\(J(u) = \lim_{n \to \infty } J_N(u)\)`
+
+\\\[ J_N(u) = a_N(i) ; \ \ \frac{i-1}{N+1} &lt; u \leq \frac{i}{N+1}\\\]
+
+---
+
+## Transforming the Statistics
+
+\\\[\text{As  } N \to \infty ,\\\]
+\\\[ \text{Capon :} \frac{C/n - 1}{\sqrt{\frac{2m}{nN}}} \to N(0,1)\\\]
+
+\\\[ \text{Klotz :} \frac{K/n - 1}{\sqrt{\frac{2m}{nN}}} \to N(0,1)\\\]
+
+\\\[ \text{Mood :} \frac{ \frac{M}{n(N+1)^2} - \frac{1}{12}}{\sqrt{\frac{m}{180.nN}}} \to N(0,1)\\\]
+
+\\\[ \text{Savage :} \frac{C/n - 1}{\sqrt{\frac{n}{mN}}} \to N(0,1)\\\]
+
+---
+
+## Asymptotic Distribution (Capon)
+
+&lt;img src="Image/asymp_capon2.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Capon)
+
+&lt;img src="Image/capon_qq.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Klotz)
+
+&lt;img src="Image/asymp_klotz2.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Klotz)
+
+&lt;img src="Image/klotz_qq.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Mood)
+
+&lt;img src="Image/asymp_mood2.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Mood)
+
+&lt;img src="Image/mood_qq.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Savage)
+
+&lt;img src="Image/asymp_savage2.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Asymptotic Distribution (Savage)
+
+&lt;img src="Image/savage_qq.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+### Asymptotic Equivalence of Capon &amp; Klotz
+
+Here, we have the distribution of the Capon &amp; Klotz statistics
+
+&lt;img src="capon-klotz-equivalence.jpeg" width="90%" height="100%" style="display: block; margin: auto;" /&gt;
+
+--
+
+\\\[\text{But, does distributional equivalence} \implies \text{asymptotic equivalence ?}\\\]
+
+--
+
+\\\[ \text{NO..!!!}\\\]
+
+---
+
+### Asymptotic Equivalence of Capon &amp; Klotz
+
+Idea: Compare all scores from `\(i= 1, 2, ..., n\)`
+
+&lt;img src="Image/asymp_equivalence_capon_klotz.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Violations
+
+All nice graphs, till now were based on 'certain' assumptions.
+
+Given independent samples where 
+\\\[X_1, X_2, ..., X_n \overset{iid}{\sim} H(x/ \theta)\\\] 
+\\\[Y_1, Y_2, ..., Y_m \overset{iid}{\sim} H(x)\\\]
+
+--
+
+\\\[ \text{But, what if our assumptions are violated?}\\\]
+
+Let's work with the following idea:
+
+\\\[\text{What if the} \ X_is \ \text{were dependent?}\\\]
+
+--
+
+May be the statistic will not be distribution-free under `\(H_0\)`
+
+Implementation: For i=2 to n, iteratively perform 
+`$$X_1' = X_1, \ \ X_i' = X_i - X_{i-1}$$`
+
+---
+
+### Violation: Dependent X observations
+
+\\\[ \text{Capon Test Statistic}\\\]
+
+&lt;img src="Image\violation_capon.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Violation: Dependent X observations
+
+\\\[ \text{Mood Test Statistic}\\\]
+
+&lt;img src="Image\violation_mood.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Violation: Dependent X observations
+
+\\\[ \text{Savage Test Statistic}\\\]
+
+&lt;img src="Image\violation_savage.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Violation: Dependent X observations
+
+\\\[ \text{Klotz Test Statistic}\\\]
+
+&lt;img src="Image\violation_klotz.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Violations
+
+But, we see that Klotz test statistic might still be distribution free.
+
+--
+
+\\\[ \text{Intuitive Reason}\\\]
+Dependence structure introduced in sample of `\(X_is\)` is unable to cause different changes for different underlying distribution
+
+--
+
+\\\[ \text{Idea: Introduce dependence structure in } Y_js \\\]
+
+\\\[ \text{Implementation: For j=2 to m, iteratively perform } \\\]
+
+`$$Y_1' = Y_1, \ \ Y_j' = Y_j + Y_{j-1}$$` 
+
+---
+
+### Violation: Dependent X &amp; Dependent Y observations
+
+\\\[ \text{Klotz Test Statistic}\\\]
+
+&lt;img src="Image\tmp_violations_klotz.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# LMP Scale for Gamma
+
+Let's work with Gamma Distribution with shape parameter, `\(\alpha = 5\)`
+`$$\begin{eqnarray} h(x) &amp;=&amp; \frac{x^{\alpha -1}}{\Gamma(\alpha)} e^{-x} \\ f(x; \theta) &amp;=&amp; e^{\theta}. h(e^{\theta} x) \\ \implies ln f(x; \theta) &amp;=&amp; \alpha \theta + ln(\frac{x^{\alpha -1}}{\Gamma(\alpha)}) - e^{\theta}x \\ \implies \frac{f'(x; \theta)}{f(x; \theta)} &amp;=&amp; \alpha - e^{\theta} x\end{eqnarray}$$`
+Score function:
+
+`$$\begin{eqnarray} a_N(i,f) &amp;=&amp; \mathbb{E} \left[ \frac{f'(X_{(i)}; 0)}{f(X_{(i)}; 0)} \right] &amp;=&amp; \alpha  - \mathbb{E} [X_{(i)}]\end{eqnarray}$$`
+---
+
+## LMP Scale for Gamma
+
+And, the LMP Rank test is the one which rejects `\(H_0\)` when:
+
+`$$\begin{eqnarray} \sum_{i=1}^n c_i a_N(i,f) &amp;\geq&amp; k_{\alpha} \\ \implies - \sum_{i=1}^n\mathbb{E}[ \frac{f'(X; 0)}{f(X; 0)}] &amp;\geq&amp; k_{\alpha} \\ \implies - n \alpha + \sum_{i=1}^n \mathbb{E} [X_{(i)}] &amp;\geq&amp; k_{\alpha} \\ \implies \sum_{i=1}^n \mathbb{E}[X_{(i)}] &amp;\geq&amp; k_{\alpha}^{\prime}\end{eqnarray}$$`
+
+--
+
+`$$\sum_{i=1}^n \mathbb{E}[X_{(i)}] :  \text{Gupta - Shinde Test Statistic ?}$$`
+
+--
+
+&lt;img src="Image-Meme\boys.png" width="30%" height="30%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+---
+
+## LMP Scale for Gamma
+
+Distribution under Null: `\(\theta = 1\)`
+
+&lt;img src="Image\gs_alternate_theta_1.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## LMP Scale for Gamma
+
+Distribution under Alternative: `\(\theta = 3\)`
+
+&lt;img src="Image\gs_alternate_theta_3.jpeg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Gamma Distribution: UMP Counterpart
+
+We'll use simplified version for the UMP tests 
+`$$X_1, X_2, ..., X_n \overset{iid}{\sim} Gamma(k, \beta)$$`
+
+`$$Y_1, Y_2, ..., Y_m \overset{iid}{\sim} Gamma(k, 1)$$`
+
+Let's try developing UMP parametric test for:
+\\\[H_0: \beta = 1 \ \text{vs} \ H_1:\beta = \beta_0 &gt; 1\\\]
+
+Using Neymann-Pearson Lemma, UMP parametric tests:
+
+`$$\begin{eqnarray}\sum_{i=1}^n X_i \geq k_{\alpha} \end{eqnarray}$$`
+UMP Test for `\(H_0\)` vs `\(H_1\)`: `\(\sum_{i=1}^n X_i \geq   \psi_{\alpha}; \ \ \ \psi \sim Gamma(nk, 1)\)`
+
+---
+
+## Gamma Distribution: Power Curve
+
+&lt;img src="Image\gs_gamma_power_curve_changed.jpeg" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## LMP Scale for Weibull
+
+Let's work with Weibull(k,1) Distribution
+
+`$$h(x) = kx^{k-1}e^{-x^k} ; \ \ x&gt;0$$`
+
+Consider independent samples, 
+`$$X_i \overset{iid}\sim Weibull(k,\theta); \ \ \ Y_j^k \overset{iid}\sim Weibull(k,1)$$`
+
+Under `\(H_0\)`, by making the transformation:
+`$$X_i^k \overset{iid}\sim Exp(1); \ \ \ Y_j^k \overset{iid}\sim Exp(1)$$`
+
+`$$\text{Savage Statistic should suffice as LMP Statistic}$$`
+`$$\text{As, power transformation causes no change to rank vector.}$$`
+---
+
+## Weibull Distribution LMP: Power Curve
+
+&lt;img src="Image\gs_weibull_power_curve_changed.jpeg" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+#LMP Scale for Cauchy
+Let's work with Cauchy(0,1) Distribution:
+`$$h(x) = \frac{1}{\pi (1 + x^2)}$$`
+
+Score function:
+
+`$$\frac{f'(X_{(i)},0)}{f'(X_{(i)},0)} = 1 - \frac{2 X_{(i)}}{1 + X_{(i)}^2}$$`
+
+LMP Test for `\(H_0: \theta = 1 \text{ vs } \ \theta &gt; 1\)`
+
+`$$\sum_{i=1}^n - \ \mathbb{E} \left[ \frac{1}{1 + X_{(i)}^2}\right] &gt; k_{\alpha}$$`
+--
+
+`$$\text{Gupta-Shinde Statistic ?}$$`
+---
+
+## Cauchy Distribution LMP: Power Curve
+
+&lt;img src="Image\gs_cauchy_power_curve_changed.jpeg" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Two other test statistics
+
+### 1. Modified Wilcoxon Rank Sum(WRS*):
+- &lt;font size="3"&gt; Yes! Wilcoxon Rank Sum test can also be used to test the difference in scale parameters of two populations. (Reject the test for larger values of WRS) &lt;/font&gt;
+&lt;font size="2"&gt; `$$WRS^*= \sum_{1=1}^n R_{(i,N)}^*$$` &lt;/font&gt;
+
+### 2. Modified Median test for scale:
+-  If I replace `\(R_{(i,N)}\)` by `\(R_{(i,N)}^*\)` in Median-test. It can also be used to test difference in scale parameter for different populations. 
+&lt;font size="2"&gt; `$$Y = \frac{\displaystyle\sum_{i=1}^n {\left(\text{sgn}\left(R_{(i,N)}^*- \frac{N+1}{2}\right)+1\right)}}{2}$$` &lt;/font&gt;
+---
+## Modified WRS under different populations
+
+&lt;img src="Image-Yash/WSR_test_all_dist1.jpg" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+---
+
+## Modified Median test under different population
+
+&lt;img src="Image-Yash/Y_test_all_dist1.jpg" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+---
+## Are these better than Capon?
+
+&lt;img src="Image-Yash/Capon under all dist.jpg" width="57%" height="57%" style="display: block; margin: auto;" /&gt;&lt;img src="Image-Yash/WSR_test_all_dist1.jpg" width="57%" height="57%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="Image-Meme\TY2.jpg" width="100%" height="70%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false,
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
